@@ -17,9 +17,14 @@ const slides = [
 	}
 ]
 
-// Sélectionner/Récuperer la flèche gauche et la flèche droite du diaporama
+// Récuperer la flèche gauche et la flèche droite du diaporama
 const arrowleft = document.querySelector(".arrow_left");
 const arrowright = document.querySelector(".arrow_right");
+
+// Récupérer l'élément du DOM qui contiendra les points de navigation du diaporama
+const dotsContainer = document.querySelector(".dots");
+
+
 
 // Ecouter l'événement click sur la flèche gauche
 arrowleft.addEventListener("click", () => {
@@ -31,3 +36,21 @@ arrowright.addEventListener("click", () => {
 	console.log("Flèche droite cliquée");
 });
 
+
+// Parcourir le tableau 'slides' pour créer les points de navigation du diaporama
+for (let i = 0; i < slides.length; i++) { // Permet de compter automatiquement le nombre d'éléments dans le tableau
+
+	// Créer un élément <div> pour chaque point de navigation
+	const dot = document.createElement("div");
+
+	dot.classList.add("dot"); // Ajouter la classe "dot" à l'élément <div>
+
+	// Si c'est le premier point (index 0), on lui ajoute aussi la classe 'dot_selected'
+	if (i === 0) {
+		dot.classList.add("dot_selected");
+	}
+	
+	// Ajouter ce point dans le conteneur des points (.dots)
+	dotsContainer.appendChild(dot);
+
+}
