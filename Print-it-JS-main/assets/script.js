@@ -17,40 +17,68 @@ const slides = [
 	}
 ]
 
-// Récuperer la flèche gauche et la flèche droite du diaporama
-const arrowleft = document.querySelector(".arrow_left");
-const arrowright = document.querySelector(".arrow_right");
+// Initialisation de l'index de la slide courante (on commence à 0)
+let currentIndex = 0;
 
-// Récupérer l'élément du DOM qui contiendra les points de navigation du diaporama
+// Sélection des éléments du DOM nécessaires
+const arrowLeft = document.querySelector(".arrow_left");
+const arrowRight = document.querySelector(".arrow_right");
+const bannerImg = document.querySelector(".banner-img");
+const bannerText = document.querySelector("#banner p");
 const dotsContainer = document.querySelector(".dots");
 
-
-
-// Ecouter l'événement click sur la flèche gauche
-arrowleft.addEventListener("click", () => {
-	console.log("Flèche gauche cliquée");
-});
-	
-// Ecouter l'événement click sur la flèche droite
-arrowright.addEventListener("click", () => {
-	console.log("Flèche droite cliquée");
-});
-
-
-// Parcourir le tableau 'slides' pour créer les points de navigation du diaporama
-for (let i = 0; i < slides.length; i++) { // Permet de compter automatiquement le nombre d'éléments dans le tableau
-
-	// Créer un élément <div> pour chaque point de navigation
+// Génération dynamique des bullet points (étape 3)
+for (let i = 0; i < slides.length; i++) {
 	const dot = document.createElement("div");
-
-	dot.classList.add("dot"); // Ajouter la classe "dot" à l'élément <div>
-
-	// Si c'est le premier point (index 0), on lui ajoute aussi la classe 'dot_selected'
+	dot.classList.add("dot");
 	if (i === 0) {
 		dot.classList.add("dot_selected");
 	}
-	
-	// Ajouter ce point dans le conteneur des points (.dots)
 	dotsContainer.appendChild(dot);
-
 }
+
+// Sélectionner tous les points qui viennent d'être créés
+const dots = document.querySelectorAll(".dot");
+
+
+// Ecouter l'événement pour la flèche de droite
+arrowRight.addEventListener("click", () => {
+	console.log("Clic de la flèche de droite");
+
+	// On incrémente l'index pour passer à l'image suivante
+    currentIndex++;
+    
+    // Mise à jour de l'image, du texte et des points
+    updateCarousel();
+});
+
+// Ecouteur d'événement pour la flèche gauche
+arrowLeft.addEventListener("click", () => {
+    console.log("Clic sur la flèche de gauche");
+    
+    // On décrémente l'index pour passer à l'image précédente
+    currentIndex--;
+    
+    // Mise à jour de l'image, du texte et des points
+    updateCarousel();
+});
+
+
+// Fonction pour mettre à jour l'affichage du carrousel
+function updateCarousel() {
+    // Mettre à jour l'image de la bannière
+    bannerImg.src = `./assets/images/slideshow/${slides[currentIndex].image}`;
+
+    // Mettre à jour le texte (tagLine) avec innerHTML
+    bannerText.innerHTML = slides[currentIndex].tagLine;
+
+    // Mettre à jour les bullet points (gérer la classe dot_selected)
+	
+    // On parcourt tous les points pour retirer la sélection...
+    for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove("dot_selected");
+    }
+    // ...et on l'ajoute uniquement sur le point actif (currentIndex)
+    dots[currentIndex].classList.add("dot_selected");
+}
+
