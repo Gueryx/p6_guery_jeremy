@@ -47,6 +47,11 @@ arrowRight.addEventListener("click", () => {
 
 	// On incrémente l'index pour passer à l'image suivante
     currentIndex++;
+
+	// Si on dépasse la dernière image, on revient au début (index 0)
+    if (currentIndex >= slides.length) {
+        currentIndex = 0;
+    }
     
     // Mise à jour de l'image, du texte et des points
     updateCarousel();
@@ -58,6 +63,11 @@ arrowLeft.addEventListener("click", () => {
     
     // On décrémente l'index pour passer à l'image précédente
     currentIndex--;
+
+	// Si on est avant la première image, on passe à la toute dernière
+    if (currentIndex < 0) {
+        currentIndex = slides.length - 1;
+    }
     
     // Mise à jour de l'image, du texte et des points
     updateCarousel();
@@ -73,7 +83,7 @@ function updateCarousel() {
     bannerText.innerHTML = slides[currentIndex].tagLine;
 
     // Mettre à jour les bullet points (gérer la classe dot_selected)
-	
+
     // On parcourt tous les points pour retirer la sélection...
     for (let i = 0; i < dots.length; i++) {
         dots[i].classList.remove("dot_selected");
